@@ -1,0 +1,23 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/Code-app/Code-app.html",
+  "fragments": [
+    "src/Code-app/Code-app.html",
+    "src/Code-app/Main-view.html",
+    "src/Code-app/News-view.html",
+    "src/Code-app/NotFound-view.html",
+    "src/Code-app/WebDev-view.html",
+    "src/Code-app/AppDev-view.html",
+    "src/Code-app/Tuto-view.html",
+    "src/Code-app/Project -view.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "/bower_components/webcomponentsjs/webcomponents-lite.js"
+  ]
+}

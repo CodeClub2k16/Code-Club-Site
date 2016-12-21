@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<link rel="import" href="./codeclubsite-view.html">
+
+<dom-module id="Project-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      paper-material{
+        background-color: white;
+      }
+    </style>
+    <paper-material elevation="1">
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{tail}}">
+    </app-route>
+    <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="NotFound"
+            role="main">
+          <codeclubsite-view name="codeclubsite"></codeclubsite-view>
+    </iron-pages>
+    </paper-material>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'Project-view',
+      properties:{
+        page: {
+          type: String,
+          value: 'Main',
+          reflectToAttribute: true,
+        }
+      },
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+      _routePageChanged: function(page) {
+        this.page = page || 'Main';
+        console.log(page);
+      },
+      _pageChanged: function(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl(''+ page + '-view.html');
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);  
+      }
+    });
+  </script>
+</dom-module>

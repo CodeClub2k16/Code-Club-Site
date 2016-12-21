@@ -1,0 +1,138 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../bower_components/webcomponentsjs/webcomponents.js"></script>
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/responsive-embed/responsive-embed.html">
+
+
+</head><body><dom-module id="WebDev-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      paper-material{
+        background-color: #fff;
+      }
+      paper-material.about{
+        margin: 10px;
+        padding: 10px;
+      }
+      paper-material.list{
+        margin: 10px;
+        padding: 0px;
+        min-width:30%;
+      }
+      paper-material.facebook{
+        margin:10px;
+        padding:10px;
+        clear:both;
+      }
+      .heading {
+        padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 100%;
+        text-align: left;
+      }
+      paper-card { 
+      max-width: 150px;
+      min-width: 250px;
+      margin: 10px;
+      --paper-card-header-image:{
+           height:200px;
+           object-fit: contain;
+        };
+        --paper-card-header-image-text:{
+          color: white;
+        };
+      }
+       @media all and (max-width: 600px) {
+        paper-card {
+          min-width: 50%;
+        }
+      }
+      @media all and (max-width: 600px) {
+        paper-material.about{
+          min-width: 90%;
+        }
+        paper-material.list{
+          min-width: 95%;
+        }
+      }
+    </style>
+    <style is="custom-style">
+    .container {
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+    }
+    .about{
+      @apply(--layout-flex);
+    }
+    .center{
+      margin:auto;
+    }
+    #questions{
+      background-color: #1565C0;
+      color: white;
+    }
+    a{
+      text-decoration: none;
+    }
+  </style>
+    <firebase-app auth-domain="cccnotify-21a8d.firebaseapp.com" database-url="https://cccnotify-21a8d.firebaseio.com" api-key="AIzaSyDyQpXUcCDBtBvfGBpVDCeJa_eAQ2x-LTg">
+    </firebase-app>
+    <firebase-document id="fire" path="/WebDevDiscuss" data="{{dataBaseData}}">
+    </firebase-document>
+    <div class="container">
+    <paper-material elevation="1" class="about">
+      <h1>Web development</h1>
+      <p>
+        Web Development group creates a squence of online tutorials 
+      </p>
+      <a href="https://groups.google.com/forum/#!forum/cbit-webdevelopment-group"><paper-button id="questions" raised="">Any Questions</paper-button></a>
+    </paper-material>
+    <paper-material class="list">
+      <paper-toolbar>
+        <paper-spinner id="loading" active=""></paper-spinner>
+        <span class="title center">Ongoing Projects</span>
+      </paper-toolbar>
+      <paper-listbox>
+        <template is="dom-repeat" items="{{dataBaseData}}">
+          <a href="{{item.url}}"><paper-item>{{item.name}}</paper-item></a>
+        </template>
+      </paper-listbox>
+    </paper-material>
+    </div>
+    <paper-material class="ProjectShowCase">
+      <paper-toolbar>
+        <paper-spinner id="loading" active=""></paper-spinner>
+        <span class="title center">Ongoing Projects</span>
+      </paper-toolbar>
+    </paper-material>
+    <paper-card id="card" heading="" image="../../images/tutorials.png" alt="Emmental">
+        <div class="card-content">
+            Tutorials
+        </div>
+        <div class="card-actions">
+            <paper-button>Info</paper-button>
+        </div>
+      </paper-card>
+  </template>
+
+  <script>Polymer({is:"WebDev-view",properties:{dataBaseData:{type:Array,value:null,observer:"fun"}},fun:function(e){console.log(e),this.$.loading.active=!this.$.loading.active}});</script>
+</dom-module>
+</body></html>

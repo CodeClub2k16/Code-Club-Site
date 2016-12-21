@@ -1,0 +1,221 @@
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-location/iron-location.html">
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="Main-view.html">
+<link rel="import" href="News-view.html">
+<link rel="import" href="NotFound-view.html">
+<link rel="import" href="WebDev-view.html">
+<link rel="import" href="AppDev-view.html">
+<link rel="import" href="Tuto-view.html">
+<link rel="import" href="Project-view.html">
+
+<dom-module id="Code-app">
+
+  <template>
+
+    <style>
+      .white{
+        color: #fff;
+      }
+      app-toolbar {
+        background-color: #1565c0;
+      }
+      .main-header {
+        box-shadow: 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+      }
+      paper-tabs {
+        --paper-tabs-selection-bar-color: black;
+        height: 100%;
+        max-width: 640px;
+      }
+      paper-tab {
+        --paper-tab-ink: #fff;
+        text-transform: uppercase;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+
+        padding: 0 16px;
+
+        text-decoration: none;
+
+        color: var(--app-secondary-color);
+
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+
+        font-weight: bold;
+      }
+      #ccc{
+        width: auto;
+        height: auto;
+      }
+      #body{
+        margin:0px;
+      }
+      #brand{
+        color: white;
+        margin: 0px;
+      }
+      a{
+        text-decoration: none;
+      }
+    </style>
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{tail}}">
+    </app-route>    
+    </app-route>
+    <app-drawer-layout id="body" force-narrow>
+
+      <app-drawer id="drawer">
+
+       
+
+        <!-- Nav on mobile: side nav menu -->
+        <app-toolbar>
+          <span id="brand">Cbit Code Club</span>
+        </app-toolbar>
+        <paper-menu>
+          <a href="/Main"on-click="toggle"><paper-item  name="Main">Main</paper-item></a>
+          <a href="/News" on-click="toggle"><paper-item  name="Main">News</paper-item></a>
+        </paper-menu>
+
+      </app-drawer>
+
+      <app-header-layout>
+        <app-header fixed condenses class="main-header" effects="waterfall">
+
+          <app-toolbar>
+            <paper-icon-button class="menu-button white" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
+            <iron-image src="../../images/ccc.png" id="ccc"  hidden$="{{!wideLayout}}"></iron-image>
+            <iron-image src="../../images/ccc.png" id="ccc"  hidden$="{{wideLayout}}"></iron-image>
+          </app-toolbar>
+          <app-toolbar class="tabs-bar" hidden$="{{!wideLayout}}">
+            <!-- Nav on desktop: tabs -->
+            <paper-tabs sticky>
+                <a href="/Main"><paper-item class="white" name="Main">Main</paper-item></a>
+                <a href="/News"><paper-item class="white" name="Main">News</paper-item></a>
+            </paper-tabs>
+          </app-toolbar>
+        </app-header>
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="NotFound"
+            role="main">
+          <Project-view name="Project" route="{{tail}}"></Project-view>          
+          <Main-view name="Main" id="main"></Main-view>
+          <News-view name="News"></News-view>
+          <NotFound-view name="NotFound"></NotFound-view>
+          <WebDev-view name="WebDev"></WebDev-view>
+          <AppDev-view name="AppDev"></AppDev-view>
+          <Tuto-view name="Tuto"></AppDev-view>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+    <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'Code-app',
+      properties: {
+        selected: {
+          type: String,
+          value: 'Main'
+        },
+        wideLayout: {
+          type: Boolean,
+          value: false,
+          observer: 'onLayoutChange',
+        },
+        items: {
+          type: Array,
+          value: function() {
+            return ['Main', 'News'];
+          }
+        },
+        page: {
+          type: String,
+          value: 'Main',
+          reflectToAttribute: true
+        },
+        tab: {
+          type: String,
+          value: 'Main',
+          reflectToAttribute: true
+        },
+        id: {
+          type: String,
+          value: 'hi',
+          reflectToAttribute: true
+        }
+      },
+      onLayoutChange: function(wide) {
+        var drawer = this.$.drawer;
+        if (wide && drawer.opened) {
+          drawer.opened = false;
+        }
+      },
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+
+      _routePageChanged: function(page) {
+        this.page = this.routeData.page|| 'Main';
+      },
+
+        _pageChanged: function(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl(''+ page + '-view.html');
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+        var drawer = this.$.drawer;
+        drawer.opened = false;
+        console.log(this.page+this.id);
+      },
+
+      _showPage404: function() {
+        this.page = 'NotFound';
+      },
+      log: function(e){
+        console.log(e);
+      },
+      toggle: function(e)
+      {
+        this.$.drawer.toggle();
+      }
+    });
+  </script>
+
+</dom-module>

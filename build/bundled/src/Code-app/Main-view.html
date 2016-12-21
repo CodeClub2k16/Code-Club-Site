@@ -1,0 +1,62 @@
+<html><head><meta charset="UTF-8"><link rel="import" href="Code-app.html"></head><body><dom-module id="Main-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      paper-card { 
+      max-width: 150px;
+      min-width: 350px;
+      margin: 0px 10px 10px 0px;
+      --paper-card-header-image:{
+           height:200px;
+           object-fit: contain;
+        };
+        --paper-card-header-image-text:{
+          color: white;
+        };
+      }
+       @media all and (max-width: 600px) {
+        paper-card {
+          min-width: 100%;
+        }
+      }
+    </style>
+    <style include="iron-flex"></style>
+    <div class="card">
+      <paper-card id="card" heading="" image="../../images/polymer.png" alt="Polymer">
+        <div class="card-content">
+            Web Development
+        </div>
+        <div class="card-actions">
+            <paper-button>Join</paper-button>
+            <paper-button on-click="explore" name="WebDev">Explore!</paper-button>
+        </div>
+      </paper-card>
+      <paper-card id="card" heading="" image="../../images/android.png" alt="Emmental">
+        <div class="card-content">
+            App Development
+        </div>
+        <div class="card-actions">
+            <paper-button>Join</paper-button>
+            <paper-button on-click="explore" name="AppDev">Explore!</paper-button>
+        </div>
+      </paper-card>
+      <paper-card id="card" heading="" image="../../images/tutorials.png" alt="Emmental">
+        <div class="card-content">
+            Tutorials
+        </div>
+        <div class="card-actions">
+            <paper-button>Join</paper-button>
+            <paper-button on-click="explore" name="Tuto">Explore!</paper-button>
+        </div>
+      </paper-card>
+     <div>
+    
+
+  </div></div></template>
+
+  <script>Polymer({is:"Main-view",properties:{tab:{type:String,value:null}},explore:function(e){window.location="./"+e.currentTarget.getAttribute("name")}});</script>
+</dom-module>
+</body></html>
